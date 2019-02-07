@@ -2,10 +2,11 @@
     "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-        "StorageAccount": {
+        "storageAccountPrefix": {
             "type": "string",
+            "defaultValue": "STGacc",
             "metadata": {
-                "description": "Name for the storage account"
+                "description": "Prefix for the storage account"
             }
         },
         "AccountType": {
@@ -26,7 +27,7 @@
         {
             "type": "Microsoft.Storage/storageAccounts",
             "apiVersion": "2018-07-01",
-            "name": "[parameters('StorageAccount')]",
+            "name": "[toLower(concat(parameters('storageAccountPrefix'), '-', uniqueString(resourceGroup().id)))]",
             "location": "[resourceGroup().location]",
             "sku": {
                 "name": "[parameters('AccountType')]"
