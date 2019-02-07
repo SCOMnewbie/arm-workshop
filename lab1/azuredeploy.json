@@ -7,7 +7,7 @@
         {
             "type": "Microsoft.Storage/storageAccounts",
             "apiVersion": "2018-07-01",
-            "name": "Scomnewbie-stgacc",
+            "name": "scomnewbiestgacc",
             "location": "[resourceGroup().location]",
             "sku": {
                 "name": "Standard_LRS"
