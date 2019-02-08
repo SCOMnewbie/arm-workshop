@@ -2,32 +2,8 @@
     "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-        "name": {
+        "webAppName": {
             "value": "fanfwebapp"
-        },
-        "hostingPlanName": {
-            "value": "fanfapp-plan"
-        },
-        "hostingEnvironment": {
-            "value": ""
-        },
-        "location": {
-            "value": "West Europe"
-        },
-        "sku": {
-            "value": "Free"
-        },
-        "workerSize": {
-            "value": "0"
-        },
-        "serverFarmResourceGroup": {
-            "value": "lab2"
-        },
-        "skuCode": {
-            "value": "F1"
-        },
-        "subscriptionId": {
-            "value": "feeca1cc-da9e-403a-86e6-cd4ba7a63f3e"
         }
     }
 }

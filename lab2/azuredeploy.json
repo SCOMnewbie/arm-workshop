@@ -1,29 +1,79 @@
 {
+    "$schema": "http://schema.management.azure.com/schemas/2014-04-01-preview/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "webAppName": {
+            "type": "string"
+        },
+        "hostingPlanName": {
+            "type": "string",
+            "defaultValue": "fanfapp"
+        },
+        "hostingEnvironment": {
+            "type": "string",
+            "defaultValue": ""
+        },
+        "location": {
+            "type": "string",
+            "defaultValue": "West Europe",
+            "allowedValues": [
+                "West Europe",
+                "East US"
+            ]
+        },
+        "sku": {
+            "type": "string",
+            "defaultValue": "Free",
+            "allowedValues": [
+                "Free"
+            ]
+        },
+        "skuCode": {
+            "type": "string",
+            "defaultValue": "F1",
+            "allowedValues": [
+                "F1"
+            ]
+        },
+        "workerSize": {
+            "type": "string",
+            "defaultValue": "0"
+        },
+        "subscriptionId": {
+            "type": "string",
+            "defaultValue": "feeca1cc-da9e-403a-86e6-cd4ba7a63f3e"
+        }
+    },
+    "variables": {
+        "serverFarmId": "[concat('/subscriptions/', parameters('subscriptionId'),'/resourcegroups/', variables('serverFarmResourceGroup'), '/providers/Microsoft.Web/serverfarms/', parameters('hostingPlanName'))]",
+        "FullhostingPlanName": "[concat(parameters('hostingPlanName'), '-plan')]",
+        "serverFarmResourceGroup": "[resourceGroup().name]"
+    },
     "resources": [
         {
-            "apiVersion": "2016-03-01",
-            "name": "[parameters('name')]",
             "type": "Microsoft.Web/sites",
+            "apiVersion": "2016-03-01",
+            "name": "[parameters('webAppName')]",
             "properties": {
-                "name": "[parameters('name')]",
+                "name": "[parameters('webAppName')]",
                 "siteConfig": {
                     "appSettings": []
                 },
-                "serverFarmId": "[concat('/subscriptions/', parameters('subscriptionId'),'/resourcegroups/', parameters('serverFarmResourceGroup'), '/providers/Microsoft.Web/serverfarms/', parameters('hostingPlanName'))]",
+                "serverFarmId": "[variables('serverFarmId')]",
                 "hostingEnvironment": "[parameters('hostingEnvironment')]"
             },
             "location": "[parameters('location')]",
             "dependsOn": [
-                "[concat('Microsoft.Web/serverfarms/', parameters('hostingPlanName'))]"
+                "[concat('Microsoft.Web/serverfarms/', variables('FullhostingPlanName') )]"
             ]
         },
         {
             "apiVersion": "2016-09-01",
-            "name": "[parameters('hostingPlanName')]",
+            "name": "[variables('FullhostingPlanName')]",
             "type": "Microsoft.Web/serverfarms",
             "location": "[parameters('location')]",
             "properties": {
-                "name": "[parameters('hostingPlanName')]",
+                "name": "[variables('FullhostingPlanName')]",
                 "workerSizeId": "[parameters('workerSize')]",
                 "numberOfWorkers": "1",
                 "hostingEnvironment": "[parameters('hostingEnvironment')]"
@@ -33,36 +83,5 @@
                 "Name": "[parameters('skuCode')]"
             }
         }
-    ],
-    "parameters": {
-        "name": {
-            "type": "string"
-        },
-        "hostingPlanName": {
-            "type": "string"
-        },
-        "hostingEnvironment": {
-            "type": "string"
-        },
-        "location": {
-            "type": "string"
-        },
-        "sku": {
-            "type": "string"
-        },
-        "skuCode": {
-            "type": "string"
-        },
-        "workerSize": {
-            "type": "string"
-        },
-        "serverFarmResourceGroup": {
-            "type": "string"
-        },
-        "subscriptionId": {
-            "type": "string"
-        }
-    },
-    "$schema": "http://schema.management.azure.com/schemas/2014-04-01-preview/deploymentTemplate.json#",
-    "contentVersion": "1.0.0.0"
+    ]
 }
