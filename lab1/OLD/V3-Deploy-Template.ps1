@@ -9,11 +9,6 @@ $template = '.\azuredeploy.json'
 
 az group create -g $rg -l $location
 
-#Seems buggy with my current version
-Test-AzureRmResourceGroupDeployment -ResourceGroupName $rg -TemplateFile $template
-#Use CLI instead
-az group deployment validate -g $rg --template-file $template
-
 #Will work
 New-AzureRmResourceGroupDeployment -Name $job -TemplateFile $template -ResourceGroupName $rg
 
